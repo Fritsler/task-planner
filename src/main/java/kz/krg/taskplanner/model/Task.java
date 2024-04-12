@@ -12,6 +12,10 @@ import java.util.List;
 @Data
 public class Task {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+            generator = "sequenceGenerator_task")
+    @SequenceGenerator(name = "sequenceGenerator_task",
+            sequenceName = "seq_worker", allocationSize = 1)
     private Long id;
     @ManyToOne
     private Worker worker;

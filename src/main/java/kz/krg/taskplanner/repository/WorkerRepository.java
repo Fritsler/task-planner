@@ -1,9 +1,8 @@
 package kz.krg.taskplanner.repository;
 
-import kz.krg.taskplanner.model.TaskStatus;
+import kz.krg.taskplanner.model.Worker;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TaskStatusRepository extends JpaRepository<TaskStatus, Long> {
-}
+public interface WorkerRepository extends JpaRepository<Worker, Long> {}

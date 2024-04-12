@@ -11,6 +11,10 @@ import java.util.Date;
 @Data
 public class TaskStatus {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+            generator = "sequenceGenerator_taskStatus")
+    @SequenceGenerator(name = "sequenceGenerator_taskStatus",
+            sequenceName = "seq_worker", allocationSize = 1)
     private Long id;
     @ManyToOne
     private Task task;
