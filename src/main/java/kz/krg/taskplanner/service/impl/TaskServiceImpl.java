@@ -32,8 +32,10 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Task save(TaskDto taskDto) {
         Task task = new Task();
+        Status oldStatus = null;
         if (taskDto.getId() != null) {
             task = taskRepository.findById(taskDto.getId()).orElse(new Task());
+            oldStatus = task.getStatus();
         }
         task.setPrice(taskDto.getPrice());
         task.setComment(taskDto.getComment());
@@ -64,15 +66,18 @@ public class TaskServiceImpl implements TaskService {
 
         task = taskRepository.save(task);
 
+        TaskStatus taskStatus = null;
         if (status != null) {
-            if (!status.equals(task.getStatus())) {
-                TaskStatus taskStatus = new TaskStatus();
+            if (!status.equals(oldStatus)) {
+                taskStatus = new TaskStatus();
                 taskStatus.setStatus(status);
                 taskStatus.setTask(task);
                 taskStatusRepository.save(taskStatus);
             }
         }
-
+        if (taskStatus != null && task.getStatuses()==null) {
+            task.setStatuses(List.of(taskStatus));
+        }
         return task;
     }
 

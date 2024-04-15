@@ -1,5 +1,6 @@
 package kz.krg.taskplanner.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -7,6 +8,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table
@@ -31,6 +33,9 @@ public class Task {
     @ManyToOne
     @JsonManagedReference
     private Status status;
+    @OneToMany(mappedBy = "task")
+    @JsonManagedReference
+    private List<TaskStatus> statuses;
     private String comment;
     private Integer price;
     @CreatedDate
