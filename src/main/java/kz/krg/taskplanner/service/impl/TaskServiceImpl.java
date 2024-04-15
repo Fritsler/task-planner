@@ -45,6 +45,7 @@ public class TaskServiceImpl implements TaskService {
         Status status = null;
         if (taskDto.getStatusId() != null) {
             status = statusService.getStatus(taskDto.getStatusId());
+            task.setStatus(status);
         }
         if (taskDto.getTypeId() != null) {
             Type type = typeService.getType(taskDto.getTypeId());
@@ -70,7 +71,6 @@ public class TaskServiceImpl implements TaskService {
                 taskStatus.setTask(task);
                 taskStatusRepository.save(taskStatus);
             }
-            task.setStatus(status);
         }
 
         return task;

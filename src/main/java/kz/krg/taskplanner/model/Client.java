@@ -1,5 +1,6 @@
 package kz.krg.taskplanner.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,11 +20,12 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
             generator = "sequenceGenerator_client")
     @SequenceGenerator(name = "sequenceGenerator_client",
-            sequenceName = "seq_worker", allocationSize = 1)
+            sequenceName = "seq_client", allocationSize = 1)
     private Long id;
     private String fio;
     private String phoneNumber;
     private String email;
     @OneToMany(mappedBy = "client")
+    @JsonBackReference
     private List<Task> tasks;
 }

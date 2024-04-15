@@ -1,5 +1,6 @@
 package kz.krg.taskplanner.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,5 +24,6 @@ public class Worker {
     private Long id;
     private String name;
     @OneToMany(mappedBy = "worker")
+    @JsonBackReference
     private List<Task> tasks;
 }
