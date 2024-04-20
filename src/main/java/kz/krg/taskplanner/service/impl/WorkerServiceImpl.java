@@ -16,7 +16,7 @@ public class WorkerServiceImpl implements WorkerService {
 
     @Override
     public List<Worker> listWorkers() {
-        return workerRepository.findAll();
+        return workerRepository.findAllByDeletedIsFalse();
     }
 
     @Override
@@ -36,5 +36,14 @@ public class WorkerServiceImpl implements WorkerService {
     @Override
     public Worker getWorker(Long id) {
         return workerRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void delete(Long id) {
+        Worker worker = workerRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("worker with id " +
+                        id + " not found"));
+        worker.setDeleted(true);
+        workerRepository.save(worker);
     }
 }

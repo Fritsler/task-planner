@@ -1,13 +1,10 @@
 package kz.krg.taskplanner.rest;
 
 import kz.krg.taskplanner.model.Worker;
+import kz.krg.taskplanner.model.dto.ResponseDto;
 import kz.krg.taskplanner.service.WorkerService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,5 +22,15 @@ public class WorkerRestController {
     @PostMapping
     public Worker saveWorker(@RequestBody Worker worker) {
         return workerService.save(worker);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseDto deleteWorker(@PathVariable Long id) {
+        try {
+            workerService.delete(id);
+            return new ResponseDto("success", null);
+        } catch (Exception ex) {
+            return new ResponseDto("error", ex.getMessage());
+        }
     }
 }

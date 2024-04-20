@@ -9,11 +9,7 @@ import kz.krg.taskplanner.model.Worker;
 import kz.krg.taskplanner.model.dto.TaskDto;
 import kz.krg.taskplanner.repository.TaskRepository;
 import kz.krg.taskplanner.repository.TaskStatusRepository;
-import kz.krg.taskplanner.service.ClientService;
-import kz.krg.taskplanner.service.StatusService;
-import kz.krg.taskplanner.service.TaskService;
-import kz.krg.taskplanner.service.TypeService;
-import kz.krg.taskplanner.service.WorkerService;
+import kz.krg.taskplanner.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +24,7 @@ public class TaskServiceImpl implements TaskService {
     private final TypeService typeService;
     private final WorkerService workerService;
     private final StatusService statusService;
+    private final EmailService emailService;
 
     @Override
     public Task save(TaskDto taskDto) {
@@ -73,6 +70,16 @@ public class TaskServiceImpl implements TaskService {
                 taskStatus.setStatus(status);
                 taskStatus.setTask(task);
                 taskStatusRepository.save(taskStatus);
+
+                if (status.getId()==14 && task.getClient().getEmail() != null) {
+                    emailService.sendEmail(task.getClient().getEmail(),
+                            "Ваш запрос на починку исполнен",
+                            "Уважаемый " + task.getClient().getFio() + "!\n\n" +
+                                    "Работы по вышему заказу на " + task.getType().getType() + " выполнены успешно\n" +
+                                    "Цена: " + task.getPrice() + "\n" +
+                                    "Исполнитель: " + task.getWorker().getName() + "\n" +
+                                    "Комментарий: " + task.getComment());
+                }
             }
         }
         if (taskStatus != null && task.getStatuses()==null) {

@@ -9,4 +9,6 @@ public interface WorkerService {
     Worker save(Worker worker);
 
     Worker getWorker(Long id);
+
+    void delete(Long id);
 }

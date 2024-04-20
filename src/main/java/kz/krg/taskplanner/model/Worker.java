@@ -1,13 +1,7 @@
 package kz.krg.taskplanner.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.List;
@@ -23,6 +17,8 @@ public class Worker {
             sequenceName = "seq_worker", allocationSize = 1)
     private Long id;
     private String name;
+    @Column(columnDefinition = "boolean default false")
+    private boolean deleted = false;
     @OneToMany(mappedBy = "worker")
     @JsonBackReference
     private List<Task> tasks;
