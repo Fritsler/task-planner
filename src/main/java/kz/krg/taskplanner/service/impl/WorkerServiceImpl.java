@@ -2,6 +2,7 @@ package kz.krg.taskplanner.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
 import kz.krg.taskplanner.model.Worker;
+import kz.krg.taskplanner.model.dto.WorkerDto;
 import kz.krg.taskplanner.repository.WorkerRepository;
 import kz.krg.taskplanner.service.WorkerService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ public class WorkerServiceImpl implements WorkerService {
     }
 
     @Override
-    public Worker save(Worker worker) {
+    public Worker save(WorkerDto worker) {
         Worker workerToSave;
         if (worker.getId() == null) {
             workerToSave = new Worker();
@@ -30,6 +31,7 @@ public class WorkerServiceImpl implements WorkerService {
                             worker.getId() + " not found"));
         }
         workerToSave.setName(worker.getName());
+        workerToSave.setDeleted(worker.getDeleted() == null ? workerToSave.isDeleted() : worker.getDeleted());
         return workerRepository.save(workerToSave);
     }
 
