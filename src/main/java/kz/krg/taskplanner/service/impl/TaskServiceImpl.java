@@ -75,7 +75,7 @@ public class TaskServiceImpl implements TaskService {
                     emailService.sendEmail(task.getClient().getEmail(),
                             "Ваш запрос на починку исполнен",
                             "Уважаемый " + task.getClient().getFio() + "!\n\n" +
-                                    "Работы по вышему заказу на " + task.getType().getType() + " выполнены успешно\n" +
+                                    "Работы по вашему заказу на " + task.getType().getType() + " выполнены успешно\n" +
                                     "Цена: " + task.getPrice() + "\n" +
                                     "Исполнитель: " + task.getWorker().getName() + "\n" +
                                     "Комментарий: " + task.getComment());

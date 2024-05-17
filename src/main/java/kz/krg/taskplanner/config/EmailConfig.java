@@ -37,7 +37,7 @@ public class EmailConfig {
         props.put("mail.smtp.auth", smtpAuth);
         props.put("mail.smtp.starttls.enable", starttlsEnabled);
         props.put("mail.debug", "true");
-
+        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         return mailSender;
     }
 }
